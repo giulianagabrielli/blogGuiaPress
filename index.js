@@ -5,9 +5,11 @@ const connection = require('./database/database')
 
 const CategoriesController = require('./categories/CategoriesController')
 const ArticlesController = require('./articles/ArticlesController')
+const UsersController = require('./users/UsersController')
 
 const Article = require('./articles/Article')
 const Category = require('./categories/Category')
+const User = require('./users/User')
 
 //view engine
 app.set('view engine', 'ejs')
@@ -31,6 +33,7 @@ connection
 
 app.use('/', CategoriesController)
 app.use('/', ArticlesController)
+app.use('/', UsersController)
 
 //rota home
 app.get('/', (req, res)=>{
