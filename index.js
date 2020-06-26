@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const session = require('express-session')
+
 const connection = require('./database/database')
 
 const CategoriesController = require('./categories/CategoriesController')
@@ -13,6 +15,14 @@ const User = require('./users/User')
 
 //view engine
 app.set('view engine', 'ejs')
+
+//Sessions
+app.use(session({
+    secret: 'qualquercoisaaleatoria',
+    cookie: {
+        maxAge: 3000000
+    }
+}))
 
 //Static
 app.use(express.static('public'))
@@ -87,6 +97,22 @@ app.get('/category/:slug', (req, res)=>{
         res.redirect('/')
     })
 })
+
+//sessions - salvando os dados
+app.get('/session', (req, res)=>{
+    req.session.treinamento = "Formação Node.js"
+    req.session.user = {
+        username: "Giuliana",
+        email: "giu@email.com",
+        id: 10
+    }
+})
+
+//sessions - acessando os dados
+app.get('/leitura', (req, res)=>{
+
+})
+
 
 app.listen(3333, ()=>{
     console.log('Servidor iniciado na porta 3333.')
